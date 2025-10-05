@@ -1,0 +1,16 @@
+.DS_Store
+*.tsbuildinfo
+.vscode/
+node_modules/
+.editorconfig
+.eslintrc.js
+.eslintrc.prepublish.js
+.gitignore
+.npmignore
+.prettierrc.js
+CODE_OF_CONDUCT.md
+gulpfile.js
+package-lock.json
+README_N8N_TEMPLATE.md
+README_TEMPLATE.md
+tsconfig.json

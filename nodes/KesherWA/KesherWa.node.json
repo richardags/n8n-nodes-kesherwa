@@ -1,0 +1,20 @@
+{
+    "node": "n8n-nodes-base.KesherWA",
+    "nodeVersion": "1.0",
+    "codexVersion": "1.0",
+    "categories": [
+        "Communication"
+    ],
+    "resources": {
+        "credentialDocumentation": [
+            {
+                "url": "https://app.kesherwa.dev/dashboard/docs"
+            }
+        ],
+        "primaryDocumentation": [
+            {
+                "url": "https://app.kesherwa.dev/dashboard/docs"
+            }
+        ]
+    }
+}

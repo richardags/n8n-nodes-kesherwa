@@ -1,0 +1,66 @@
+{
+	"name": "n8n-nodes-kesherwa",
+	"version": "1.0.0",
+	"description": "Send and receive WhatsApp messages via KesherWA REST API. Supports text, images, videos, audio, documents, locations, and reactions with automatic media decryption.",
+	"keywords": [
+		"n8n-community-node-package",
+		"whatsapp",
+		"whatsapp business api",
+		"whatsapp rest api",
+		"whatsapp api",
+		"kesherwa",
+		"messaging",
+		"automation",
+		"chatbot",
+		"notifications",
+		"customer support",
+		"webhook"
+	],
+	"license": "MIT",
+	"homepage": "https://kesherwa.dev",
+	"author": {
+		"name": "KesherWA",
+		"email": "contact@kesherwa.dev"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/richardags/n8n-nodes-kesherwa.git"
+	},
+	"engines": {
+		"node": ">=22.20"
+	},
+	"main": "index.js",
+	"scripts": {
+		"build": "npx rimraf dist && tsc && gulp build:icons",
+		"dev": "tsc --watch",
+		"format": "prettier nodes credentials --write",
+		"lint": "eslint nodes credentials package.json",
+		"lintfix": "eslint nodes credentials package.json --fix",
+		"prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"credentials": [
+			"dist/credentials/KesherWaApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/KesherWA/KesherWa.node.js",
+			"dist/nodes/KesherWA/KesherWaTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@types/request": "^2.48.13",
+		"@typescript-eslint/parser": "~8.32.0",
+		"eslint": "^8.57.0",
+		"eslint-plugin-n8n-nodes-base": "^1.16.3",
+		"gulp": "^5.0.0",
+		"prettier": "^3.5.3",
+		"typescript": "^5.8.2"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}
