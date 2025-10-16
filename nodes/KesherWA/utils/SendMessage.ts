@@ -1,4 +1,4 @@
-import { IExecuteFunctions, IHttpRequestOptions } from "n8n-workflow";
+import { IExecuteFunctions, IHttpRequestOptions, INodeExecutionData } from "n8n-workflow";
 import { DeleteReactionMessageResponse, SendAudioMessageResponse, SendDocumentMessageResponse, SendImageMessageResponse, SendLocationMessageResponse, SendReactionMessageResponse, SendTextMessageResponse, SendVideoMessageResponse } from "../schemas/whatsapp.schema";
 
 export class SendMessage {
@@ -16,9 +16,9 @@ export class SendMessage {
         return await executeFunctions.helpers.httpRequest.call(executeFunctions, imageOptions);
 	}
 
-    static async sendTextMessage(executeFunctions: IExecuteFunctions, i: number, botId: string, remoteJid: string): Promise<any> {
-        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', i) as boolean;
-        const text = executeFunctions.getNodeParameter('textText', i) as string;
+    static async sendTextMessage(executeFunctions: IExecuteFunctions, itemIndex: number, botId: string, remoteJid: string): Promise<INodeExecutionData> {
+        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', itemIndex) as boolean;
+        const text = executeFunctions.getNodeParameter('textText', itemIndex) as string;
 
         const options: IHttpRequestOptions = {
             method: 'POST',
@@ -42,22 +42,23 @@ export class SendMessage {
                 success: responseData.status,
                 data: dataTextResponse,
                 message: responseData.msg
-            }
+            },
+            pairedItem: itemIndex
         };
     }
 
-    static async sendImageMessage(executeFunctions: IExecuteFunctions, i: number, botId: string, remoteJid: string): Promise<any> {
-        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', i) as boolean;
-        const inputDataType = executeFunctions.getNodeParameter('inputDataType', i) as string;
+    static async sendImageMessage(executeFunctions: IExecuteFunctions, itemIndex: number, botId: string, remoteJid: string): Promise<INodeExecutionData> {
+        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', itemIndex) as boolean;
+        const inputDataType = executeFunctions.getNodeParameter('inputDataType', itemIndex) as string;
         let buffer: Buffer;
 
         if(inputDataType == 'url'){
-            const url = executeFunctions.getNodeParameter('inputDataUrl', i) as string;
+            const url = executeFunctions.getNodeParameter('inputDataUrl', itemIndex) as string;
             const arrayBuffer = await this.downloadFile(executeFunctions, url, skipSslCertificateValidation);
             buffer = Buffer.from(arrayBuffer as ArrayBuffer);
         }else /*if (inputDataType == 'binary')*/{
-            const binaryPropertyName = executeFunctions.getNodeParameter('inputDataBuffer', i) as string;
-            buffer = await executeFunctions.helpers.getBinaryDataBuffer(i, binaryPropertyName);
+            const binaryPropertyName = executeFunctions.getNodeParameter('inputDataBuffer', itemIndex) as string;
+            buffer = await executeFunctions.helpers.getBinaryDataBuffer(itemIndex, binaryPropertyName);
         }
 
         const options: IHttpRequestOptions = {
@@ -82,22 +83,23 @@ export class SendMessage {
                 success: responseData.status,
                 data: dataResponse,
                 message: responseData.msg
-            }
+            },
+            pairedItem: itemIndex
         };
     }
 
-    static async sendAudioMessage(executeFunctions: IExecuteFunctions, i: number, botId: string, remoteJid: string): Promise<any> {
-        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', i) as boolean;
-        const inputDataType = executeFunctions.getNodeParameter('inputDataType', i) as string;
+    static async sendAudioMessage(executeFunctions: IExecuteFunctions, itemIndex: number, botId: string, remoteJid: string): Promise<INodeExecutionData> {
+        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', itemIndex) as boolean;
+        const inputDataType = executeFunctions.getNodeParameter('inputDataType', itemIndex) as string;
         let buffer: Buffer;
 
         if(inputDataType == 'url'){
-            const url = executeFunctions.getNodeParameter('inputDataUrl', i) as string;
+            const url = executeFunctions.getNodeParameter('inputDataUrl', itemIndex) as string;
             const arrayBuffer = await this.downloadFile(executeFunctions, url, skipSslCertificateValidation);
             buffer = Buffer.from(arrayBuffer as ArrayBuffer);
         }else /*if (inputDataType == 'binary')*/{
-            const binaryPropertyName = executeFunctions.getNodeParameter('inputDataBuffer', i) as string;
-            buffer = await executeFunctions.helpers.getBinaryDataBuffer(i, binaryPropertyName);
+            const binaryPropertyName = executeFunctions.getNodeParameter('inputDataBuffer', itemIndex) as string;
+            buffer = await executeFunctions.helpers.getBinaryDataBuffer(itemIndex, binaryPropertyName);
         }
 
         const options: IHttpRequestOptions = {
@@ -122,22 +124,23 @@ export class SendMessage {
                 success: responseData.status,
                 data: dataResponse,
                 message: responseData.msg
-            }
+            },
+            pairedItem: itemIndex
         };
     }
 
-    static async sendVideoMessage(executeFunctions: IExecuteFunctions, i: number, botId: string, remoteJid: string): Promise<any> {
-        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', i) as boolean;
-        const inputDataType = executeFunctions.getNodeParameter('inputDataType', i) as string;
+    static async sendVideoMessage(executeFunctions: IExecuteFunctions, itemIndex: number, botId: string, remoteJid: string): Promise<INodeExecutionData> {
+        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', itemIndex) as boolean;
+        const inputDataType = executeFunctions.getNodeParameter('inputDataType', itemIndex) as string;
         let buffer: Buffer;
 
         if(inputDataType == 'url'){
-            const url = executeFunctions.getNodeParameter('inputDataUrl', i) as string;
+            const url = executeFunctions.getNodeParameter('inputDataUrl', itemIndex) as string;
             const arrayBuffer = await this.downloadFile(executeFunctions, url, skipSslCertificateValidation);
             buffer = Buffer.from(arrayBuffer as ArrayBuffer);
         }else /*if (inputDataType == 'binary')*/{
-            const binaryPropertyName = executeFunctions.getNodeParameter('inputDataBuffer', i) as string;
-            buffer = await executeFunctions.helpers.getBinaryDataBuffer(i, binaryPropertyName);
+            const binaryPropertyName = executeFunctions.getNodeParameter('inputDataBuffer', itemIndex) as string;
+            buffer = await executeFunctions.helpers.getBinaryDataBuffer(itemIndex, binaryPropertyName);
         }
 
         const options: IHttpRequestOptions = {
@@ -162,25 +165,26 @@ export class SendMessage {
                 success: responseData.status,
                 data: dataResponse,
                 message: responseData.msg
-            }
+            },
+            pairedItem: itemIndex
         };
     }
 
-    static async sendDocumentMessage(executeFunctions: IExecuteFunctions, i: number, botId: string, remoteJid: string): Promise<any> {
-        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', i) as boolean;
-        const inputDataType = executeFunctions.getNodeParameter('inputDataType', i) as string;
+    static async sendDocumentMessage(executeFunctions: IExecuteFunctions, itemIndex: number, botId: string, remoteJid: string): Promise<INodeExecutionData> {
+        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', itemIndex) as boolean;
+        const inputDataType = executeFunctions.getNodeParameter('inputDataType', itemIndex) as string;
         let buffer: Buffer;
 
         if(inputDataType == 'url'){
-            const url = executeFunctions.getNodeParameter('inputDataUrl', i) as string;
+            const url = executeFunctions.getNodeParameter('inputDataUrl', itemIndex) as string;
             const arrayBuffer = await this.downloadFile(executeFunctions, url, skipSslCertificateValidation);
             buffer = Buffer.from(arrayBuffer as ArrayBuffer);
         }else /*if (inputDataType == 'binary')*/{
-            const binaryPropertyName = executeFunctions.getNodeParameter('inputDataBuffer', i) as string;
-            buffer = await executeFunctions.helpers.getBinaryDataBuffer(i, binaryPropertyName);
+            const binaryPropertyName = executeFunctions.getNodeParameter('inputDataBuffer', itemIndex) as string;
+            buffer = await executeFunctions.helpers.getBinaryDataBuffer(itemIndex, binaryPropertyName);
         }
 
-        const extension = executeFunctions.getNodeParameter('documentExtension', i) as string;
+        const extension = executeFunctions.getNodeParameter('documentExtension', itemIndex) as string;
 
         const options: IHttpRequestOptions = {
             method: 'POST',
@@ -205,14 +209,15 @@ export class SendMessage {
                 success: responseData.status,
                 data: dataResponse,
                 message: responseData.msg
-            }
+            },
+            pairedItem: itemIndex
         };
     }
 
-    static async sendLocationMessage(executeFunctions: IExecuteFunctions, i: number, botId: string, remoteJid: string): Promise<any> {
-        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', i) as boolean;
-        const degreesLatitude = executeFunctions.getNodeParameter('locationDegreesLatitude', i) as number;
-        const degreesLongitude = executeFunctions.getNodeParameter('locationDegreesLongitude', i) as number;
+    static async sendLocationMessage(executeFunctions: IExecuteFunctions, itemIndex: number, botId: string, remoteJid: string): Promise<INodeExecutionData> {
+        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', itemIndex) as boolean;
+        const degreesLatitude = executeFunctions.getNodeParameter('locationDegreesLatitude', itemIndex) as number;
+        const degreesLongitude = executeFunctions.getNodeParameter('locationDegreesLongitude', itemIndex) as number;
 
         const options: IHttpRequestOptions = {
             method: 'POST',
@@ -237,14 +242,15 @@ export class SendMessage {
                 success: responseData.status,
                 data: dataTextResponse,
                 message: responseData.msg
-            }
+            },
+            pairedItem: itemIndex
         };
     }
 
-    static async sendReactionMessage(executeFunctions: IExecuteFunctions, i: number, botId: string, remoteJid: string): Promise<any> {
-        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', i) as boolean;
-        const emoji = executeFunctions.getNodeParameter('reactionEmoji', i) as string;
-        const messageId = executeFunctions.getNodeParameter('reactionMessageId', i) as string;
+    static async sendReactionMessage(executeFunctions: IExecuteFunctions, itemIndex: number, botId: string, remoteJid: string): Promise<INodeExecutionData> {
+        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', itemIndex) as boolean;
+        const emoji = executeFunctions.getNodeParameter('reactionEmoji', itemIndex) as string;
+        const messageId = executeFunctions.getNodeParameter('reactionMessageId', itemIndex) as string;
 
         const options: IHttpRequestOptions = {
             method: 'POST',
@@ -269,13 +275,14 @@ export class SendMessage {
                 success: responseData.status,
                 data: dataTextResponse,
                 message: responseData.msg
-            }
+            },
+            pairedItem: itemIndex
         };
     }
 
-    static async deleteReactionMessage(executeFunctions: IExecuteFunctions, i: number, botId: string, remoteJid: string): Promise<any> {
-        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', i) as boolean;
-        const messageId = executeFunctions.getNodeParameter('reactionMessageId', i) as string;
+    static async deleteReactionMessage(executeFunctions: IExecuteFunctions, itemIndex: number, botId: string, remoteJid: string): Promise<INodeExecutionData> {
+        const skipSslCertificateValidation = executeFunctions.getNodeParameter('skipSslCertificateValidation', itemIndex) as boolean;
+        const messageId = executeFunctions.getNodeParameter('reactionMessageId', itemIndex) as string;
 
         const options: IHttpRequestOptions = {
             method: 'DELETE',
@@ -299,7 +306,8 @@ export class SendMessage {
                 success: responseData.status,
                 data: dataTextResponse,
                 message: responseData.msg
-            }
+            },
+            pairedItem: itemIndex
         };
     }
 }

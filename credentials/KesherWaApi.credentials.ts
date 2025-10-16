@@ -16,7 +16,7 @@ export class KesherWaApi implements ICredentialType {
 			type: 'string',
 			typeOptions: { password: true },
 			default: '',
-			placeholder: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib3RJZCI6IjlhMDNiM2M1LWY3MGItNDEyNi1hMTM2LTExYmI2MjgwYmRlMyIsImlhdCI6MTc1OTM2ODk4OSwiZXhwIjoxNzkwOTA0OTg5fQ.de8dRvO7MgrOmevdlW9lmnGTeADgigbaGiKkSlYbOPQ',
+			placeholder: 'eyJhbGc...your-token-here',
 		},
 		{
 			displayName: 'Bot ID',
@@ -24,7 +24,7 @@ export class KesherWaApi implements ICredentialType {
 			type: 'string',
 			typeOptions: { password: false },
 			default: '',
-			placeholder: '9a03b3c5-f70b-4126-a136-11bb6280bde3',
+			placeholder: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
 		},
 		{
 			displayName: 'Ignore SSL Issues',

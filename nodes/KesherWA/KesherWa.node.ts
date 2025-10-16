@@ -344,7 +344,7 @@ export class KesherWa implements INodeType {
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
         const items = this.getInputData();
-        const returnData = [];
+        const returnData: INodeExecutionData[] = [];
         const resource = this.getNodeParameter('resource', 0) as string;
         
         // Get the correct operation parameter based on resource
@@ -374,50 +374,138 @@ export class KesherWa implements INodeType {
             const remoteJid = this.getNodeParameter('remoteJid', i) as string;
 
             if (resource === 'message') {
-                if (operation === 'sendWhatsAppText') {        
-                    const data = await SendMessage.sendTextMessage(this, i, botId, remoteJid);
-                    returnData.push(data);
+                if (operation === 'sendWhatsAppText') {
+                    try {
+                        const data = await SendMessage.sendTextMessage(this, i, botId, remoteJid);
+                        returnData.push(data);
+                    } catch (error) {
+                        if (this.continueOnFail()) {
+                            returnData.push({
+                                json: { error: error.message },
+                                pairedItem: { item: i },
+                            });
+                            continue;
+                        }
+                        throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+                    }
                 }
             }
 
             if (resource === 'media') {
                 if (operation === 'sendWhatsAppImage') {
-                    const data = await SendMessage.sendImageMessage(this, i, botId, remoteJid);
-                    returnData.push(data);
+                    try {
+                        const data = await SendMessage.sendImageMessage(this, i, botId, remoteJid);
+                        returnData.push(data);
+                    } catch (error) {
+                        if (this.continueOnFail()) {
+                            returnData.push({
+                                json: { error: error.message },
+                                pairedItem: { item: i },
+                            });
+                            continue;
+                        }
+                        throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+                    }
                 }
 
                 if (operation === 'sendWhatsAppAudio') {
-                    const data = await SendMessage.sendAudioMessage(this, i, botId, remoteJid);
-                    returnData.push(data);
+                    try {
+                        const data = await SendMessage.sendAudioMessage(this, i, botId, remoteJid);
+                        returnData.push(data);
+                    } catch (error) {
+                        if (this.continueOnFail()) {
+                            returnData.push({
+                                json: { error: error.message },
+                                pairedItem: { item: i },
+                            });
+                            continue;
+                        }
+                        throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+                    }
                 }
 
                 if (operation === 'sendWhatsAppVideo') {
-                    const data = await SendMessage.sendVideoMessage(this, i, botId, remoteJid);
-                    returnData.push(data);
+                    try {
+                        const data = await SendMessage.sendVideoMessage(this, i, botId, remoteJid);
+                        returnData.push(data);
+                    } catch (error) {
+                        if (this.continueOnFail()) {
+                            returnData.push({
+                                json: { error: error.message },
+                                pairedItem: { item: i },
+                            });
+                            continue;
+                        }
+                        throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+                    }
                 }
 
                 if (operation === 'sendWhatsAppDocument') {
-                    const data = await SendMessage.sendDocumentMessage(this, i, botId, remoteJid);
-                    returnData.push(data);
+                    try {
+                        const data = await SendMessage.sendDocumentMessage(this, i, botId, remoteJid);
+                        returnData.push(data);
+                    } catch (error) {
+                        if (this.continueOnFail()) {
+                            returnData.push({
+                                json: { error: error.message },
+                                pairedItem: { item: i },
+                            });
+                            continue;
+                        }
+                        throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+                    }
                 }
             }
 
             if (resource === 'location') {
                 if (operation === 'sendWhatsAppLocation') {
-                    const data = await SendMessage.sendLocationMessage(this, i, botId, remoteJid);
-                    returnData.push(data);
+                    try {
+                        const data = await SendMessage.sendLocationMessage(this, i, botId, remoteJid);
+                        returnData.push(data);
+                    } catch (error) {
+                        if (this.continueOnFail()) {
+                            returnData.push({
+                                json: { error: error.message },
+                                pairedItem: { item: i },
+                            });
+                            continue;
+                        }
+                        throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+                    }
                 }
             }
 
             if (resource === 'reaction') {
                 if (operation === 'sendWhatsAppReaction') {
-                    const data = await SendMessage.sendReactionMessage(this, i, botId, remoteJid);
-                    returnData.push(data);
+                    try {
+                        const data = await SendMessage.sendReactionMessage(this, i, botId, remoteJid);
+                        returnData.push(data);
+                    } catch (error) {
+                        if (this.continueOnFail()) {
+                            returnData.push({
+                                json: { error: error.message },
+                                pairedItem: { item: i },
+                            });
+                            continue;
+                        }
+                        throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+                    }
                 }
 
                 if (operation === 'deleteWhatsAppReaction') {
-                    const data = await SendMessage.deleteReactionMessage(this, i, botId, remoteJid);
-                    returnData.push(data);
+                    try {
+                        const data = await SendMessage.deleteReactionMessage(this, i, botId, remoteJid);
+                        returnData.push(data);
+                    } catch (error) {
+                        if (this.continueOnFail()) {
+                            returnData.push({
+                                json: { error: error.message },
+                                pairedItem: { item: i },
+                            });
+                            continue;
+                        }
+                        throw new NodeOperationError(this.getNode(), error, { itemIndex: i });
+                    }
                 }
             }
         }
