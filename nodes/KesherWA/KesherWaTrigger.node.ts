@@ -34,7 +34,7 @@ export class KesherWaTrigger implements INodeType {
         },
         inputs: [],
         outputs: [NodeConnectionTypes.Main, NodeConnectionTypes.Main, NodeConnectionTypes.Main, NodeConnectionTypes.Main, NodeConnectionTypes.Main, NodeConnectionTypes.Main, NodeConnectionTypes.Main, NodeConnectionTypes.Main],
-        outputNames: ['📨 All Events', '💬 Text Messages', '🖼️ Images', '🎥 Videos', '🎵 Audio', '📄 Documents', '📍 Locations', '😀 Reactions'],
+        outputNames: ['All Events', 'Text Messages', 'Images', 'Videos', 'Audio', 'Documents', 'Locations', 'Reactions'],
         webhooks: [
             {
                 name: 'default',
