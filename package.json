@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-kesherwa",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Send and receive WhatsApp messages via KesherWA REST API. Supports text, images, videos, audio, documents, locations, and reactions with automatic media decryption.",
 	"keywords": [
 		"n8n-community-node-package",
